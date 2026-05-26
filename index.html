@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Azure + AI Updates - May 22, 2026 Noon</title>
+  <title>Azure + AI Updates</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
@@ -67,327 +67,122 @@
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--cp-bg);
-      color: var(--cp-text);
-      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.48;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, var(--cp-accent-soft), transparent 28rem),
-        radial-gradient(circle at top right, var(--cp-highlight), transparent 30rem);
-      pointer-events: none;
-      z-index: -1;
-    }
-    a { color: var(--cp-link); text-decoration: none; }
+    body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.5; }
+    a { color: var(--cp-link); text-decoration: none; overflow-wrap: anywhere; }
     a:hover { text-decoration: underline; }
-    .page { max-width: 1320px; margin: 0 auto; padding: 28px; }
+    .page { max-width: 1240px; margin: 0 auto; padding: 28px; }
     .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -0.02em; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; }
     .brand-azure { color: var(--cp-link); }
-    .nav, .sources, .meta { display: flex; flex-wrap: wrap; gap: 8px; }
-    .nav { justify-content: flex-end; }
-    .badge, .nav a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--cp-border);
-      border-radius: 999px;
-      background: var(--cp-surface);
-      color: var(--cp-text);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 7px 11px;
-      white-space: nowrap;
-    }
-    .nav a:hover { text-decoration: none; border-color: var(--cp-border-strong); }
-    .hero, .panel, .card, .finding, .summary-table {
-      background: var(--cp-surface);
-      border: 1px solid var(--cp-border);
-      border-radius: 16px;
-      box-shadow: var(--cp-shadow);
-    }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .nav a, .source { display: inline-flex; align-items: center; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text); font-size: 13px; font-weight: 700; padding: 7px 11px; }
+    .hero, .card, .table-wrap { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14); }
     .hero { overflow: hidden; margin-bottom: 18px; }
     .hero-band { height: 8px; background: var(--cp-link); }
-    .hero-body { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 22px 26px; }
+    .hero-body { padding: 22px 26px; }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: clamp(28px, 3vw, 40px); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 10px; }
-    h2 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 12px; }
+    h1 { font-size: clamp(30px, 3vw, 42px); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 10px; }
+    h2 { font-size: 24px; margin-bottom: 12px; }
     h3 { font-size: 18px; margin-bottom: 8px; }
-    .subtitle { color: var(--cp-text-muted); font-size: 16px; margin-bottom: 8px; max-width: 760px; }
+    .subtitle, .muted { color: var(--cp-text-muted); }
     .run-meta { color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin-bottom: 0; }
-    .grid { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 18px; align-items: start; }
-    .panel { padding: 20px; }
-    .sticky { position: sticky; top: 94px; }
-    .glance { display: grid; gap: 12px; }
-    .glance-item { border-left: 4px solid var(--cp-link); background: var(--cp-surface-soft); border-radius: 0.625rem; padding: 12px; }
-    .glance-item strong { display: block; margin-bottom: 3px; }
-    .glance-item span { color: var(--cp-text-muted); font-size: 13px; }
-    .section { margin-bottom: 18px; }
-    #findings { display: flex; flex-direction: column; }
-    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 24px 0 12px; border-bottom: 2px solid var(--cp-link); padding-bottom: 10px; }
-    .summary-table { overflow: hidden; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--cp-border); padding: 12px; font-size: 14px; }
+    .section { margin-bottom: 22px; }
+    .section-heading { border-bottom: 2px solid var(--cp-link); padding-bottom: 10px; margin: 24px 0 12px; }
+    .glance { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .glance-item, .box, .action, .watch-item { background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 13px; }
+    .glance-item { border-left: 4px solid var(--cp-link); }
+    .card { padding: 18px; margin-bottom: 12px; }
+    .detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .label { color: var(--cp-text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; font-weight: 900; margin-bottom: 4px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 860px; }
+    th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--cp-border); padding: 12px; font-size: 14px; overflow-wrap: anywhere; }
     th { background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
     tr:last-child td { border-bottom: 0; }
-    .priority { border-radius: 999px; border: 1px solid var(--cp-border); padding: 5px 9px; display: inline-flex; font-size: 12px; font-weight: 900; white-space: nowrap; }
-    .critical { color: var(--cp-danger); border-color: var(--cp-danger); background: var(--cp-surface); }
-    .high { color: var(--cp-accent); border-color: var(--cp-accent); background: var(--cp-accent-soft); }
-    .medium, .watch { color: var(--cp-warning); border-color: var(--cp-warning); background: var(--cp-surface); }
-    .finding { padding: 22px; margin-bottom: 14px; position: relative; overflow: hidden; }
-    .finding::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: var(--cp-link); }
-    .finding-top { display: flex; justify-content: space-between; align-items: start; gap: 14px; margin-bottom: 14px; }
-    .finding-title { display: flex; gap: 12px; align-items: flex-start; }
-    .muted { color: var(--cp-text-muted); }
-    .content-grid, .action-row, .mini-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 14px 0; }
-    .mini-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .box, .action-card, .watch-item { background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 13px; }
-    .action-card.ask { background: var(--cp-accent-soft); }
-    .label { color: var(--cp-text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; font-weight: 900; margin-bottom: 4px; }
-    .box p, .action-card p, .watch-item p { margin-bottom: 0; }
-    .sources { align-items: flex-start; min-width: 0; padding-top: 13px; margin-top: 13px; border-top: 1px solid var(--cp-border); }
-    .source {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--cp-border);
-      border-radius: 999px;
-      background: var(--cp-surface-soft);
-      color: var(--cp-text);
-      font-size: 13px;
-      font-weight: 700;
-      max-width: 100%;
-      min-width: 0;
-      overflow-wrap: normal;
-      padding: 6px 10px 6px 64px;
-      position: relative;
-      white-space: normal;
-      word-break: normal;
-      line-height: 1.3;
-    }
-    .source::before { content: "Source:"; color: var(--cp-text-muted); font-weight: 700; left: 10px; position: absolute; top: 6px; white-space: nowrap; }
-    .card { padding: 18px; min-width: 0; }
-    .watch-list, .signal-board { display: grid; gap: 10px; }
-    .signal-row { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 16px; box-shadow: var(--cp-shadow); }
-    .signal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-    .signal-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .signal-row p { margin-bottom: 8px; }
-    .signal-detail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; color: var(--cp-text-muted); font-size: 14px; }
-    .signal-detail strong { color: var(--cp-text); display: block; margin-bottom: 2px; }
-    @media (max-width: 1000px) {
-      .grid, .content-grid, .action-row, .mini-grid, .signal-detail { grid-template-columns: 1fr; }
-      .sticky { position: static; }
-    }
+    .sources { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 13px; margin-top: 13px; border-top: 1px solid var(--cp-border); }
+    .source { position: relative; padding-left: 64px; max-width: 100%; white-space: normal; line-height: 1.3; background: var(--cp-surface-soft); }
+    .source::before { content: "Source:"; color: var(--cp-text-muted); font-weight: 700; left: 10px; position: absolute; top: 7px; white-space: nowrap; }
+    .action-list, .watch-list { display: grid; gap: 10px; }
+    @media (max-width: 1000px) { .glance, .detail-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 720px) {
-      .page { padding: 16px; }
-      .topbar, .finding-top { flex-direction: column; align-items: flex-start; }
-      th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5) { display: none; }
+      .page { padding: 14px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 6px; }
+      .nav a { font-size: 12px; padding: 6px 9px; }
+      .hero-body { padding: 18px; }
+      .glance { grid-template-columns: 1fr; }
+      .glance-item { padding: 11px; }
+      .detail-grid { grid-template-columns: 1fr; }
+      table { min-width: 760px; }
+      th, td { font-size: 13px; padding: 10px; }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <nav class="topbar" aria-label="Brief navigation">
-      <div class="brand">
-        <span>Microsoft <span class="muted">|</span> <span class="brand-azure">Azure</span></span>
-      </div>
+    <nav class="topbar" aria-label="Page navigation">
+      <div class="brand">Microsoft <span class="muted">|</span> <span class="brand-azure">Azure</span></div>
       <div class="nav">
-        <a href="#key-developments">Key developments</a>
-        <a href="#findings">Findings</a>
-        <a href="#ai-radar">AI radar</a>
-        <a href="#learning">References</a>
-        <a href="#actions">What to do next</a>
-        <a href="#watch">Watch list</a>
+        <a href="#glance">At a glance</a><a href="#key-developments">Key developments</a><a href="#main-findings">Main findings</a><a href="#ai-radar">AI radar</a><a href="#references">References</a><a href="#actions">What to do next</a><a href="#watch">Watch list</a>
       </div>
     </nav>
-
-    <header class="hero">
-      <div class="hero-band"></div>
-      <div class="hero-body">
-        <div>
-          <h1>Azure + AI Updates</h1>
-          <p class="subtitle">Azure Infrastructure | AI Radar | Microsoft Entra | Security | Platform Engineering</p>
-          <p class="run-meta">May 22, 2026 | Noon</p>
-        </div>
-      </div>
-    </header>
-
-    <section class="grid">
-      <aside class="panel sticky">
-        <h2>At a glance</h2>
-        <div class="glance">
-          <div class="glance-item"><strong><a href="#key-developments">Key developments</a></strong><span>Noon updates: F5/Confluence intrusion, Security Copilot customer proof, RAMPART/Clarity, Entra validation, and Azure infra GA items.</span></div>
-          <div class="glance-item"><strong><a href="#ai-radar">AI radar</a></strong><span>Agent safety engineering, research-agent competition, and domain-specialization signals.</span></div>
-          <div class="glance-item"><strong><a href="#learning">References</a></strong><span>Source links in a table for quick follow-up.</span></div>
-          <div class="glance-item"><strong><a href="#actions">What to do next</a></strong><span>Concrete labs and discussion assets to build from today’s updates.</span></div>
-        </div>
-      </aside>
-
-      <div>
-        <section class="section" id="key-developments">
-          <div class="section-heading"><div><h2>Key developments</h2></div></div>
-          <div class="summary-table">
-            <table>
-              <thead><tr><th>Article</th><th>Date</th><th>Why it matters</th><th>Discussion angle</th><th>Source</th></tr></thead>
-              <tbody>
-                <tr><td>F5 BIG-IP to Confluence to Active Directory intrusion chain</td><td>May 22, 2026</td><td>Live Microsoft threat intelligence ties EOL edge appliances, internal Linux pivoting, Confluence compromise, plaintext app credentials, and AD relay-style attacks.</td><td>Ask which Azure-hosted or hybrid edge appliances are EOL, lightly monitored, or trusted enough to pivot into internal apps and AD.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/from-edge-appliance-to-enterprise-compromise-multi-stage-linux-intrusion-via-f5-and-confluence/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a></td></tr>
-                <tr><td>St. Luke’s University Health Network Security Copilot customer story</td><td>May 22, 2026</td><td>Public HLS proof point: Security Copilot with Defender and Sentinel is reported to save up to 200 analyst hours per month.</td><td>Ask SOC leaders where triage time is being lost today and whether a constrained Security Copilot pilot could measure time-to-triage improvement.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-security-success-stories-how-st-lukes-and-manpowergroup-are-securing-ai-foundations/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a></td></tr>
-                <tr><td>RAMPART and Clarity open-source agent safety tools</td><td>May 20, 2026</td><td>Microsoft open-sourced CI-friendly agent red-team tests and a design-phase safety sounding board for agentic AI systems.</td><td>Ask teams building agents how they test prompt injection, tool side effects, unsafe actions, and regression coverage before production.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/introducing-rampart-and-clarity-open-source-tools-to-bring-safety-into-agent-development-workflow/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a></td></tr>
-                <tr><td>Microsoft recognized as Forrester Wave Leader for Workforce Identity Security</td><td>May 22, 2026</td><td>Entra validation supports workforce identity, ITDR, phishing-resistant auth, verification, and agent/non-human identity conversations.</td><td>Frame agent identities, service principals, managed identities, and clinical automation as part of the same identity governance discussion as human users.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-recognized-as-a-leader-in-the-forrester-wave-for-workforce-identity-security-platforms/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a></td></tr>
-                <tr><td>Azure VNet NSG and route table limits increased</td><td>May 19, 2026</td><td>Higher defaults reduce friction for micro-segmentation, large hub-spoke environments, and complex HLS network rule sets.</td><td>Ask whether segmentation projects have been constrained by NSG rule count, route table scale, or support-ticket friction.</td><td><a href="https://azure.microsoft.com/updates?id=562695" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Updates RSS</a></td></tr>
-                <tr><td>Azure NetApp Files Cache Volumes GA</td><td>May 19, 2026</td><td>Supports hot-data caching from external origin volumes, useful for imaging, genomics, research datasets, and hybrid storage modernization.</td><td>Ask what portion of imaging or research I/O is hot working set versus archive, and whether burst access to Azure would help analytics or AI workflows.</td><td><a href="https://azure.microsoft.com/updates?id=562259" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Updates RSS</a></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section" id="findings">
-          <div class="section-heading"><div><h2>Main findings</h2></div></div>
-
-          <article class="finding" data-category="security azure" data-text="F5 BIG-IP Confluence Active Directory edge appliance Linux intrusion">
-            <div class="finding-top"><div class="finding-title"><div><h3>F5 BIG-IP to Confluence to Active Directory is the highest-urgency noon signal</h3><p class="muted">Article date: May 22, 2026 | Confidence: Confirmed</p><div class="meta"><span class="badge">Security</span><span class="badge">Hybrid infrastructure</span><span class="badge">Identity pivot</span></div></div></div><span class="priority high">High</span></div>
-            <div class="content-grid"><div class="box"><div class="label">What changed</div><p>Microsoft published new incident-response research showing a threat actor compromising an edge appliance, pivoting to an internal Linux host, exploiting Confluence, extracting application credentials, and using those credentials in Active Directory relay-style attacks.</p></div><div class="box"><div class="label">Why this made the cut</div><p>F5, Confluence, Linux jump hosts, and AD are common in large HLS environments. The chain is credible because it crosses cloud, edge, app, identity, and legacy operational boundaries.</p></div></div>
-            <div class="action-row"><div class="action-card ask"><div class="label">Why this matters</div><p>EOL edge infrastructure is not just a patching issue; it can become a trusted pivot into internal apps and identity systems.</p></div><div class="action-card"><div class="label">Discovery question</div><p>Which F5, firewall, VPN, or ADC instances in Azure or hybrid networks are EOL, and do you alert when they scan or authenticate laterally?</p></div></div>
-            <div class="content-grid"><div class="box"><div class="label">Recommended action</div><p>Build a detection walk-through: edge appliance anomaly, SSH access, network scan, Confluence credential exposure, and AD relay indicators.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>This is a clean bridge from infrastructure lifecycle to Sentinel, Defender for Identity, Zero Trust segmentation, and AD modernization.</p></div></div>
-            <div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/22/from-edge-appliance-to-enterprise-compromise-multi-stage-linux-intrusion-via-f5-and-confluence/">Microsoft Security Blog, 2026-05-22</a></div>
-          </article>
-
-          <article class="finding" data-category="security ai" data-text="St Luke Security Copilot Defender Sentinel SOC triage">
-            <div class="finding-top"><div class="finding-title"><div><h3>St. Luke’s gives you a public HLS Security Copilot proof point</h3><p class="muted">Article date: May 22, 2026 | Confidence: Confirmed</p><div class="meta"><span class="badge">HLS proof point</span><span class="badge">Security Copilot</span><span class="badge">SOC modernization</span></div></div></div><span class="priority high">High</span></div>
-            <div class="content-grid"><div class="box"><div class="label">What changed</div><p>Microsoft published a customer spotlight for St. Luke’s University Health Network describing Security Copilot with Defender and Sentinel, including a reported savings of up to 200 analyst hours per month.</p></div><div class="box"><div class="label">Why this made the cut</div><p>It is a public, named healthcare reference that can help open SOC modernization and AI-enabled security conversations without using private account information.</p></div></div>
-            <div class="action-row"><div class="action-card ask"><div class="label">Why this matters</div><p>Security Copilot is easier to discuss when anchored to measurable triage time savings in a real health network.</p></div><div class="action-card"><div class="label">Discovery question</div><p>What are your top two SOC triage queues by analyst hours, and where would 100-200 hours/month back change the operating model?</p></div></div>
-            <div class="content-grid"><div class="box"><div class="label">Recommended action</div><p>Use St. Luke’s as a reference in HLS CISO conversations and propose a narrow phishing or vulnerability triage pilot with before/after measurement.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It connects Sentinel, Defender, identity signals, and AI into a practical HLS outcome story.</p></div></div>
-            <div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-security-success-stories-how-st-lukes-and-manpowergroup-are-securing-ai-foundations/">Microsoft Security Blog, 2026-05-22</a><a class="source" href="https://www.microsoft.com/en/customers/story/25330-st-lukes-university-health-network-microsoft-security-copilot">Customer story</a></div>
-          </article>
-
-          <article class="finding" data-category="ai security apps" data-text="RAMPART Clarity agent safety CI prompt injection PyRIT">
-            <div class="finding-top"><div class="finding-title"><div><h3>RAMPART and Clarity move agent safety into engineering workflows</h3><p class="muted">Article date: May 20, 2026 | Confidence: Confirmed</p><div class="meta"><span class="badge">AI radar</span><span class="badge">Agent safety</span><span class="badge">CI/CD</span></div></div></div><span class="priority high">High</span></div>
-            <div class="content-grid"><div class="box"><div class="label">What changed</div><p>Microsoft open-sourced RAMPART for repeatable agent red-team tests in CI and Clarity as a design-phase sounding board for whether teams are building agents safely before code is written.</p></div><div class="box"><div class="label">Why this made the cut</div><p>HLS agents that read documents, messages, tickets, intake forms, or clinical-adjacent content need prompt-injection and tool-boundary tests as part of normal delivery.</p></div></div>
-            <div class="action-row"><div class="action-card ask"><div class="label">Why this matters</div><p>Agent safety becomes a continuous engineering discipline, not a one-time governance review.</p></div><div class="action-card"><div class="label">Discovery question</div><p>When your agent reads external content and has tool access, what automated tests prove it cannot be manipulated by the content it retrieves?</p></div></div>
-            <div class="content-grid"><div class="box"><div class="label">Recommended action</div><p>Create a three-test RAMPART demo: document prompt injection, unsafe tool invocation, and expected refusal boundary.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It gives a hands-on bridge between Foundry agents, GitHub Actions, platform engineering, and CISO-safe AI adoption.</p></div></div>
-            <div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/20/introducing-rampart-and-clarity-open-source-tools-to-bring-safety-into-agent-development-workflow/">Microsoft Security Blog, 2026-05-20</a><a class="source" href="https://github.com/microsoft/RAMPART">RAMPART repo</a><a class="source" href="https://github.com/microsoft/clarity-agent/">Clarity repo</a></div>
-          </article>
-
-          <article class="finding" data-category="azure" data-text="Azure NetApp Files Cache Volumes imaging genomics hybrid storage">
-            <div class="finding-top"><div class="finding-title"><div><h3>Azure NetApp Files Cache Volumes strengthens the HLS hybrid storage story</h3><p class="muted">Article date: May 19, 2026 | Confidence: Confirmed from Azure Updates RSS</p><div class="meta"><span class="badge">Azure/Infrastructure</span><span class="badge">Storage</span><span class="badge">Hybrid data</span></div></div></div><span class="priority medium">Medium</span></div>
-            <div class="content-grid"><div class="box"><div class="label">What changed</div><p>Azure NetApp Files Cache Volumes are generally available, enabling a cloud-based cache of an external origin volume so active working sets can be local in ANF while cold data remains elsewhere.</p></div><div class="box"><div class="label">Why this made the cut</div><p>This pairs with ANF Object REST API from the morning brief: file/object access plus cache volumes creates a stronger imaging, genomics, and research-data modernization pattern.</p></div></div>
-            <div class="action-row"><div class="action-card ask"><div class="label">Why this matters</div><p>Customers can explore cloud analytics and AI over active datasets without forcing a full storage migration on day one.</p></div><div class="action-card"><div class="label">Discovery question</div><p>What percentage of your imaging or research workload is hot working set versus archive, and where does cloud burst access help?</p></div></div>
-            <div class="content-grid"><div class="box"><div class="label">Recommended action</div><p>Create a short “ANF hybrid storage” talk track: cache volumes, object REST API, performance tiers, and governance boundaries.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It gives a practical middle path between on-prem storage inertia and Azure data/AI readiness.</p></div></div>
-            <div class="sources"><a class="source" href="https://azure.microsoft.com/updates?id=562259">Azure Updates RSS, 2026-05-19</a><a class="source" href="https://learn.microsoft.com/azure/azure-netapp-files/">Azure NetApp Files docs</a></div>
-          </article>
-        </section>
-
-        <section class="section" id="ai-radar">
-          <div class="section-heading"><div><h2>AI radar</h2></div></div>
-          <div class="signal-board">
-            <div class="signal-row">
-              <div class="signal-head">
-                <div class="signal-title"><span class="priority high">High</span><h3>RAMPART and Clarity: agent safety becomes testable engineering work</h3></div>
-                <span class="badge">May 20, 2026</span>
-              </div>
-              <p>Microsoft’s open-source tools bring red-team regression tests and design-time safety review into agent development workflows.</p>
-              <div class="signal-detail">
-                <div><strong>Why it matters</strong>Agentic AI risk is moving from policy docs into CI/CD, pytest, GitHub Actions, and reproducible safety tests.</div>
-                <div><strong>Why this matters</strong>HLS teams need a way to prove agents cannot be manipulated by records, documents, emails, or tickets they ingest.</div>
-                <div><strong>Try next</strong>Build a RAMPART test suite for a mock Foundry agent with document retrieval and a privileged tool.</div>
-              </div>
-              <div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/20/introducing-rampart-and-clarity-open-source-tools-to-bring-safety-into-agent-development-workflow/">Microsoft Security Blog</a><a class="source" href="https://github.com/microsoft/RAMPART">RAMPART</a></div>
-            </div>
-            <div class="signal-row">
-              <div class="signal-head">
-                <div class="signal-title"><span class="priority medium">Medium</span><h3>Google DeepMind Co-Scientist keeps research-agent pressure high</h3></div>
-                <span class="badge">May 2026</span>
-              </div>
-              <p>Google DeepMind’s blog index shows Co-Scientist as a multi-agent AI partner for research, reinforcing that life sciences research acceleration is becoming a major AI battleground.</p>
-              <div class="signal-detail">
-                <div><strong>Why it matters</strong>Research customers will compare Azure AI Foundry against multi-agent science workflows from Google and others.</div>
-                <div><strong>Why this matters</strong>Ask how research teams evaluate agentic research assistants: literature synthesis, experiment design, provenance, identity, and data controls.</div>
-                <div><strong>Try next</strong>Add research-agent scenarios to the AI landscape counter-map and pair with Model Router evals.</div>
-              </div>
-              <div class="sources"><a class="source" href="https://deepmind.google/discover/blog/">Google DeepMind blog index</a></div>
-            </div>
-            <div class="signal-row">
-              <div class="signal-head">
-                <div class="signal-title"><span class="priority medium">Medium</span><h3>Domain specialization remains a strong AI procurement frame</h3></div>
-                <span class="badge">May 22, 2026</span>
-              </div>
-              <p>A Hugging Face community post argues that specialization can beat scale in enterprise AI procurement, reinforcing the need to evaluate task fitness rather than only model size.</p>
-              <div class="signal-detail">
-                <div><strong>Why it matters</strong>It supports a pragmatic HLS message: clinical NLP, imaging, and operations tasks need measured fit, not generic frontier-model defaulting.</div>
-                <div><strong>Why this matters</strong>Use this to steer customers toward eval-driven model selection and domain task benchmarks.</div>
-                <div><strong>Try next</strong>Add a “specialization vs. scale” section to the Model Router eval lab.</div>
-              </div>
-              <div class="sources"><a class="source" href="https://huggingface.co/blog/Dharma-AI/specialization-beats-scale">Hugging Face, 2026-05-22</a></div>
-            </div>
-            <div class="signal-row">
-              <div class="signal-head">
-                <div class="signal-title"><span class="priority watch">Watch</span><h3>Prior AI landscape items remain relevant, but no material noon update</h3></div>
-                <span class="badge">Noon check</span>
-              </div>
-              <p>No material new updates were confirmed for Google I/O, MagenticLite/Fara1.5, LangChain interpreters, GitHub Copilot remote control, or vLLM/PegaFlow after the morning brief.</p>
-              <div class="signal-detail">
-                <div><strong>Why it matters</strong>Keeps the noon brief honest: new AI signal goes in; unchanged morning items do not get re-labeled as new.</div>
-                <div><strong>Why this matters</strong>Use the morning AI landscape set as context, not repeated news.</div>
-                <div><strong>Try next</strong>Keep the broad source scan running for the next cycle.</div>
-              </div>
-              <div class="sources"><a class="source" href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/">Google I/O recap</a><a class="source" href="https://vllm.ai/blog/2026-05-18-pegaflow">vLLM/PegaFlow</a></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="learning">
-          <div class="section-heading"><div><h2>References</h2></div></div>
-          <div class="summary-table">
-            <table>
-              <thead><tr><th>Topic</th><th>Why it matters</th><th>Links</th></tr></thead>
-              <tbody>
-                <tr><td>F5 / Confluence / AD intrusion</td><td>Threat chain for edge appliance lifecycle, internal app credential hygiene, and AD relay-style attack conversations.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/from-edge-appliance-to-enterprise-compromise-multi-stage-linux-intrusion-via-f5-and-confluence/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security analysis</a></td></tr>
-                <tr><td>Security Copilot in HLS</td><td>Public healthcare customer story for Defender, Sentinel, and Security Copilot SOC transformation.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-security-success-stories-how-st-lukes-and-manpowergroup-are-securing-ai-foundations/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security customer spotlight</a><br><a href="https://www.microsoft.com/en/customers/story/25330-st-lukes-university-health-network-microsoft-security-copilot" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">St. Luke’s customer story</a></td></tr>
-                <tr><td>Agent safety engineering</td><td>Open-source tooling to make agent safety testable, repeatable, and CI-friendly.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/introducing-rampart-and-clarity-open-source-tools-to-bring-safety-into-agent-development-workflow/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">RAMPART and Clarity blog</a><br><a href="https://github.com/microsoft/RAMPART" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">RAMPART repo</a><br><a href="https://github.com/microsoft/clarity-agent/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Clarity repo</a></td></tr>
-                <tr><td>Identity platform validation</td><td>Current Entra leadership validation for workforce identity, ITDR, verification, and AI agent identity conversations.</td><td><a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-recognized-as-a-leader-in-the-forrester-wave-for-workforce-identity-security-platforms/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Entra Forrester Wave post</a></td></tr>
-                <tr><td>Hybrid storage and networking</td><td>Useful Azure updates for segmentation scale, ANF caching, and VPN certificate modernization.</td><td><a href="https://azure.microsoft.com/updates?id=562695" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure VNet limits</a><br><a href="https://azure.microsoft.com/updates?id=562259" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">ANF Cache Volumes</a><br><a href="https://azure.microsoft.com/updates?id=562705" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">S2S VPN certificate auth</a></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section" id="actions">
-          <div class="section-heading"><div><h2>What to do next</h2></div></div>
-          <div class="mini-grid">
-            <div class="card"><h3>1. Build the F5-to-AD attack chain map</h3><p>Create a one-page detection map from edge appliance compromise to Confluence credential exposure to AD relay-style activity. Tie each step to Sentinel, Defender for Identity, and infrastructure lifecycle controls.</p><div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/22/from-edge-appliance-to-enterprise-compromise-multi-stage-linux-intrusion-via-f5-and-confluence/">Microsoft Security analysis</a></div></div>
-            <div class="card"><h3>2. Package the St. Luke’s SOC story</h3><p>Turn the public story into a short CISO talk track: current triage queue, Security Copilot pilot scope, time-to-triage metric, Defender/Sentinel integration, and “hours returned” outcome.</p><div class="sources"><a class="source" href="https://www.microsoft.com/en/customers/story/25330-st-lukes-university-health-network-microsoft-security-copilot">St. Luke’s customer story</a></div></div>
-            <div class="card"><h3>3. Run a RAMPART mini-lab</h3><p>Write three tests for a mock HLS agent: document prompt injection, safe refusal, and privileged tool boundary. Run the tests in GitHub Actions to show agent safety as CI.</p><div class="sources"><a class="source" href="https://github.com/microsoft/RAMPART">RAMPART repo</a></div></div>
-            <div class="card"><h3>4. Add Entra agent identity questions</h3><p>Add non-human identity governance to discovery: service principals, managed identities, automation identities, agent identities, lifecycle ownership, access reviews, and ITDR visibility.</p><div class="sources"><a class="source" href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-recognized-as-a-leader-in-the-forrester-wave-for-workforce-identity-security-platforms/">Entra Forrester post</a></div></div>
-            <div class="card"><h3>5. Build an ANF hybrid storage angle</h3><p>Combine ANF Cache Volumes with ANF Object REST API and Azure Files identity modernization into a practical imaging/genomics cloud-burst conversation.</p><div class="sources"><a class="source" href="https://azure.microsoft.com/updates?id=562259">ANF Cache Volumes</a><a class="source" href="https://azure.microsoft.com/updates?id=562254">ANF Object REST API</a></div></div>
-            <div class="card"><h3>6. Refresh VPN modernization discovery</h3><p>Add certificate authentication and P2S group/IP-pool segmentation to your hybrid connectivity checklist for customers still relying on static PSKs and flat remote-access pools.</p><div class="sources"><a class="source" href="https://azure.microsoft.com/updates?id=562705">S2S VPN certificate auth</a><a class="source" href="https://azure.microsoft.com/updates?id=564460">P2S groups and pools</a></div></div>
-          </div>
-        </section>
-
-        <section class="section" id="watch">
-          <div class="section-heading"><div><h2>Watch list</h2></div></div>
-          <div class="watch-list">
-            <div class="watch-item"><h3>Azure Site-to-Site VPN certificate authentication</h3><p><span class="priority watch">Watch</span> GA and useful for VPN lifecycle conversations, but elevate only for customers actively reviewing VPN, PSK rotation, or hybrid connectivity controls. <a href="https://azure.microsoft.com/updates?id=562705" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Updates</a></p></div>
-            <div class="watch-item"><h3>Google DeepMind Co-Scientist</h3><p><span class="priority watch">Watch</span> Blog index confirms a multi-agent research AI signal; full technical post URL was not reliably fetched. Track for research/pharma competitive conversations. <a href="https://deepmind.google/discover/blog/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Google DeepMind blog</a></p></div>
-            <div class="watch-item"><h3>Prior morning AI landscape items</h3><p><span class="priority watch">Watch</span> Google I/O, MagenticLite/Fara1.5, LangChain interpreters, GitHub Copilot remote control, vLLM/PegaFlow, VEGA, and NeMoClaw remain useful context with no confirmed noon material change.</p></div>
-          </div>
-        </section>
-      </div>
+    <header class="hero"><div class="hero-band"></div><div class="hero-body"><h1>Azure + AI Updates</h1><p class="subtitle">Azure Infrastructure | AI Radar | Microsoft Entra | Security | Platform Engineering</p><p class="run-meta">May 26, 2026 | 7 AM</p></div></header>
+    <section class="section" id="glance"><div class="section-heading"><h2>At a glance</h2></div><div class="glance">
+      <div class="glance-item"><strong><a href="#github-code-coverage">GitHub code coverage in PRs is the clearest new platform-engineering item.</a></strong><br><span class="muted">It gives regulated app teams a concrete quality gate as AI coding agents increase change volume.</span></div>
+      <div class="glance-item"><strong><a href="#foundry-router">Microsoft Foundry model router moved forward in May 2026 docs.</a></strong><br><span class="muted">Broader model support and higher quotas make model routing a practical architecture and governance conversation.</span></div>
+      <div class="glance-item"><strong><a href="#agent-language">Agent terminology and governance signals are maturing.</a></strong><br><span class="muted">Hugging Face's agent glossary helps turn fuzzy agent talk into concrete design review questions.</span></div>
+      <div class="glance-item"><strong><a href="#watch">Carry-forward items remain useful, but not headline news.</a></strong><br><span class="muted">AKS fleet networking, Entra agent identity, Foundry Local, and NVIDIA GTC Taipei stay on the watch path.</span></div>
+    </div></section>
+    <section class="section" id="key-developments"><div class="section-heading"><h2>Key developments</h2></div><div class="table-wrap"><table><thead><tr><th>Article</th><th>Date</th><th>Why it matters</th><th>Discussion angle</th><th>Source</th></tr></thead><tbody>
+      <tr><td>Code coverage on pull requests is now in public preview</td><td>May 26, 2026</td><td>GitHub Code Quality can show aggregate coverage directly in pull requests, backed by Cobertura reports and a new fine-grained code-quality permission.</td><td>Ask app teams whether quality gates are visible in PRs and whether AI-generated changes must meet the same coverage and review standards as human-written code.</td><td><a href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub</a></td></tr>
+      <tr><td>What's new in model router in Microsoft Foundry Models</td><td>May 2026</td><td>Model router now supports 28 models, adds seven more models, and raises quota limits across GlobalStandard and DataZoneStandard tiers.</td><td>Discuss model routing as a cost, quality, resilience, and governance pattern rather than asking every app team to hard-code one model choice.</td><td><a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Learn</a></td></tr>
+      <tr><td>Harness, Scaffold, and the AI Agent Terms Worth Getting Right</td><td>May 25, 2026</td><td>Agent conversations are still overloaded. A shared vocabulary for harness, scaffold, tools, memory, and evaluation helps teams review designs more precisely.</td><td>Use it to slow down vague agent requests and ask what system owns orchestration, tool access, memory, approval, and measurement.</td><td><a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Hugging Face</a></td></tr>
+      <tr><td>OpenAI, Grupo Folha and Grupo UOL announce strategic content partnership</td><td>May 25, 2026</td><td>Provider partnerships around trusted content and attribution continue to shape enterprise expectations for grounded AI answers and content provenance.</td><td>Ask customers how they validate sources, retain attribution, and separate public web grounding from private clinical, payer, or research data.</td><td><a href="https://openai.com/index/grupo-folha-grupo-uol-partnership" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI</a></td></tr>
+      <tr><td>NVIDIA GTC Taipei at COMPUTEX live updates</td><td>May 25, 2026 update</td><td>The latest update is light, but the event remains the near-term watch point for AI factory, GPU platform, edge AI, robotics, and agent-runtime announcements.</td><td>Keep customers focused on infrastructure readiness: capacity, power, networking, GPU scheduling, operations, cost, and governance.</td><td><a href="https://blogs.nvidia.com/blog/nvidia-gtc-taipei-computex-2026-news/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA</a></td></tr>
+      <tr><td>Powering multi-cluster workloads with cross-cluster networking for Azure Kubernetes Fleet Manager</td><td>May 22, 2026</td><td>Still useful carry-forward: Cilium-based cross-cluster networking supports multi-region AKS service discovery, resilience, policy, and observability.</td><td>Ask how customers handle regional failover, shared services, blast-radius isolation, and east-west visibility across Kubernetes estates.</td><td><a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Blog</a></td></tr>
+    </tbody></table></div></section>
+    <section class="section" id="main-findings"><div class="section-heading"><h2>Main findings</h2></div>
+      <article class="card" id="github-code-coverage"><h3>GitHub's PR coverage preview is a practical governance hook for AI-assisted development</h3><div class="detail-grid"><div class="box"><div class="label">What changed</div><p>GitHub Code Quality users can now see aggregate code coverage directly in pull requests and upload Cobertura coverage reports from CI.</p></div><div class="box"><div class="label">Why this made the cut</div><p>It is new in the run window and directly relevant to platform governance and regulated SDLC.</p></div><div class="box"><div class="label">Why this matters</div><p>AI-assisted code changes need visible controls where reviewers already work.</p></div><div class="box"><div class="label">Discovery question</div><p>Do AI-generated pull requests follow the same coverage, review, and branch protection gates as human-written changes?</p></div><div class="box"><div class="label">Recommended action</div><p>Add coverage upload to a sample workflow and map it to code owners and branch policy.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It supports credible conversations about secure app modernization, quality controls, and AI coding-agent guardrails.</p></div></div><div class="sources"><a class="source" href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a><a class="source" href="https://docs.github.com/code-security/how-tos/maintain-quality-code/set-up-code-coverage" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Code coverage docs</a></div></article>
+      <article class="card" id="foundry-router"><h3>Model routing is becoming a first-class Azure AI architecture pattern</h3><div class="detail-grid"><div class="box"><div class="label">What changed</div><p>Microsoft Foundry model router documentation lists May 2026 updates with 28 supported models, seven added models, and higher quota limits.</p></div><div class="box"><div class="label">Why this made the cut</div><p>It is a Microsoft AI infrastructure update that changes architecture conversations.</p></div><div class="box"><div class="label">Why this matters</div><p>Routing can centralize model choice, cost, quality, data-zone, and resilience decisions.</p></div><div class="box"><div class="label">Discovery question</div><p>Should application teams choose models independently, or should the platform team provide a governed routing layer?</p></div><div class="box"><div class="label">Recommended action</div><p>Create a routing worksheet with quality, latency, quota, data-zone, fallback, and evaluation requirements.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It connects AI architecture to governed platform operations, cost control, and regional/data constraints.</p></div></div><div class="sources"><a class="source" href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Model router updates</a><a class="source" href="https://learn.microsoft.com/azure/foundry/openai/concepts/model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Model router concepts</a></div></article>
+      <article class="card" id="agent-language"><h3>Agent vocabulary is now worth cleaning up before architecture work starts</h3><div class="detail-grid"><div class="box"><div class="label">What changed</div><p>Hugging Face published an agent glossary covering terms that often get conflated in agent design discussions.</p></div><div class="box"><div class="label">Why this made the cut</div><p>It is a fresh ecosystem signal that improves customer workshop quality.</p></div><div class="box"><div class="label">Why this matters</div><p>Clear terms reduce scope drift and make governance requirements easier to define.</p></div><div class="box"><div class="label">Discovery question</div><p>What owns orchestration, tools, memory, approvals, identity, audit, and evaluation for this agent?</p></div><div class="box"><div class="label">Recommended action</div><p>Draft an agent design review template using glossary terms.</p></div><div class="box"><div class="label">Why it matters to an HLS Infra SE</div><p>It helps translate vague agent requests into infrastructure, identity, and governance requirements.</p></div></div><div class="sources"><a class="source" href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Agent glossary</a></div></article>
     </section>
+    <section class="section" id="ai-radar"><div class="section-heading"><h2>AI radar</h2></div><div class="table-wrap"><table><thead><tr><th>Article date</th><th>Signal</th><th>Why it matters</th><th>Why this matters</th><th>Try next</th><th>Sources</th><th>Confidence</th></tr></thead><tbody>
+      <tr><td>May 2026</td><td>Microsoft Foundry model router expands model coverage and quota limits</td><td>Multi-model routing is moving from novelty to deployable control plane.</td><td>It can support cost, quality, data-zone, and resilience decisions centrally.</td><td>Create a model-router decision tree covering quality, cost, latency, data zone, failover, and excluded model families.</td><td><a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Learn</a></td><td>Confirmed docs</td></tr>
+      <tr><td>May 26, 2026</td><td>GitHub code coverage in pull requests enters public preview</td><td>AI-assisted code changes need visible quality gates where reviewers already work.</td><td>It supports platform governance without forcing reviewers into a separate tool.</td><td>Add coverage upload to a sample CI workflow and document branch policy expectations.</td><td><a href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub</a></td><td>Confirmed release</td></tr>
+      <tr><td>May 25, 2026</td><td>Hugging Face agent glossary clarifies agent design terms</td><td>Better language improves design reviews, governance, and scope control.</td><td>Customers need to distinguish orchestration, memory, tools, approval, and evaluation before implementation.</td><td>Build a one-page agent design review template using the glossary terms.</td><td><a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Hugging Face</a></td><td>Confirmed ecosystem post</td></tr>
+      <tr><td>May 25, 2026</td><td>OpenAI content partnership expands trusted-content and attribution signals</td><td>Grounding and source attribution remain important enterprise AI expectations.</td><td>Customers need to separate public content grounding from private clinical, payer, or operational data grounding.</td><td>Create a grounding checklist: source class, attribution, freshness, tenant boundary, logging, and data retention.</td><td><a href="https://openai.com/index/grupo-folha-grupo-uol-partnership" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI</a></td><td>Confirmed vendor post</td></tr>
+      <tr><td>May 25, 2026 update</td><td>NVIDIA GTC Taipei remains the AI infrastructure watch point</td><td>The event is likely to shape AI factory, GPU, edge AI, and agent runtime conversations.</td><td>Infrastructure planning has to include capacity, power, networking, scheduling, operations, cost, and governance.</td><td>Prepare an AI infrastructure readiness map for Azure GPU options, AKS, Azure Local, monitoring, and governance.</td><td><a href="https://blogs.nvidia.com/blog/nvidia-gtc-taipei-computex-2026-news/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA</a></td><td>Confirmed live blog; watch technical depth</td></tr>
+      <tr><td>May 22, 2026</td><td>Google I/O recap keeps competitive agentic platform pressure visible</td><td>Google's agentic Gemini narrative keeps pressure on multi-model governance conversations.</td><td>Customers need a neutral evaluation rubric across Microsoft, Google, OpenAI, open-source, and custom models.</td><td>Draft an agent-platform comparison grid covering identity, tool access, evals, observability, deployment target, and data controls.</td><td><a href="https://blog.google/innovation-and-ai/technology/ai/io-2026-dialogues-recap/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Google</a></td><td>Confirmed vendor post; carry-forward</td></tr>
+    </tbody></table></div></section>
+    <section class="section" id="references"><div class="section-heading"><h2>References</h2></div><div class="table-wrap"><table><thead><tr><th>Topic</th><th>Why it matters</th><th>Links</th></tr></thead><tbody>
+      <tr><td>GitHub code quality</td><td>Practical PR-level quality gate for regulated app teams and AI-assisted development workflows.</td><td><a href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Changelog</a> | <a href="https://docs.github.com/code-security/how-tos/maintain-quality-code/set-up-code-coverage" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Docs</a></td></tr>
+      <tr><td>Microsoft Foundry model router</td><td>Model routing supports cost, quality, quota, data-zone, and resilience conversations for enterprise AI apps.</td><td><a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Updates</a> | <a href="https://learn.microsoft.com/azure/foundry/openai/concepts/model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Concepts</a></td></tr>
+      <tr><td>Agent design language</td><td>Shared terminology helps customers avoid vague agent designs and ask better governance questions.</td><td><a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Glossary</a></td></tr>
+      <tr><td>AKS fleet networking</td><td>Multi-region resilience, platform engineering, shared services, and regulated workload isolation.</td><td><a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Blog</a> | <a href="https://learn.microsoft.com/en-us/azure/kubernetes-fleet/concepts-cross-cluster-networking" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Docs</a></td></tr>
+    </tbody></table></div></section>
+    <section class="section" id="actions"><div class="section-heading"><h2>What to do next</h2></div><div class="action-list">
+      <div class="action"><strong>Build a PR quality gate lab.</strong> Add Cobertura coverage upload to a sample GitHub Actions workflow, then document how coverage, code owners, branch protection, and AI-generated PRs should work together.</div>
+      <div class="action"><strong>Create a model router architecture worksheet.</strong> Capture model families, routing profile, excluded models, data-zone requirement, latency target, cost target, fallback behavior, logging, and evaluation plan.</div>
+      <div class="action"><strong>Draft an agent design review template.</strong> Require teams to name the harness, scaffold, tools, memory, approvals, identity, audit trail, and eval set before building a demo.</div>
+      <div class="action"><strong>Refresh the AKS fleet resilience worksheet.</strong> Add service discovery, Cilium policy, failover flow, observability, and platform-team ownership questions using the AKS Fleet docs.</div>
+    </div></section>
+    <section class="section" id="watch"><div class="section-heading"><h2>Watch list</h2></div><div class="watch-list">
+      <div class="watch-item"><strong>NVIDIA GTC Taipei technical announcements.</strong> Watch for concrete AI factory, GPU system, networking, edge AI, and agent-runtime details rather than event color.</div>
+      <div class="watch-item"><strong>Microsoft Foundry model router adoption patterns.</strong> Watch for customer-ready guidance on routing profiles, model subsets, data-zone deployment, and evaluation workflows.</div>
+      <div class="watch-item"><strong>Foundry Local on Azure Local access and support boundaries.</strong> Track preview access, model catalog scope, GPU support, ingress guidance, and security baselines.</div>
+      <div class="watch-item"><strong>AI coding-agent governance.</strong> Expect more movement around PR quality, repo permissions, package controls, identity, and audit.</div>
+    </div></section>
   </main>
-<!-- build: 2026-05-22T13:57:12.6715798-06:00 -->
+  <script>
+    document.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach((anchor) => {
+      anchor.setAttribute('target', '_blank');
+      anchor.setAttribute('rel', 'noopener noreferrer');
+      anchor.onclick = function(event) {
+        event.preventDefault();
+        window.open(this.href, '_blank', 'noopener,noreferrer');
+        return false;
+      };
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
