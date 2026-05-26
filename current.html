@@ -105,16 +105,36 @@
     .action-list, .watch-list { display: grid; gap: 10px; }
     @media (max-width: 1000px) { .glance, .detail-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 720px) {
-      .page { padding: 14px; }
-      .topbar { flex-direction: column; align-items: flex-start; }
-      .nav { gap: 6px; }
-      .nav a { font-size: 12px; padding: 6px 9px; }
+      .page { padding: 16px; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+      .brand { font-size: 15px; }
+      .nav { flex-wrap: nowrap; gap: 6px; max-width: 100%; overflow-x: auto; padding-bottom: 4px; }
+      .nav a { flex: 0 0 auto; background: var(--cp-surface-soft); border-radius: 0.625rem; font-size: 12px; padding: 6px 9px; }
+      .hero { margin-bottom: 14px; }
       .hero-body { padding: 18px; }
-      .glance { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 21px; }
+      h3 { font-size: 17px; }
+      .section { margin-bottom: 18px; }
+      .section-heading { margin: 20px 0 10px; }
+      .glance { grid-template-columns: 1fr; gap: 8px; }
       .glance-item { padding: 11px; }
-      .detail-grid { grid-template-columns: 1fr; }
-      table { min-width: 760px; }
-      th, td { font-size: 13px; padding: 10px; }
+      .glance-item strong { font-size: 14px; }
+      .glance-item .muted { font-size: 12px; }
+      .card { padding: 14px; }
+      .detail-grid { grid-template-columns: 1fr; gap: 8px; }
+      .box, .action, .watch-item { padding: 11px; }
+      .table-wrap { background: transparent; border: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+      table, thead, tbody, tr, td { display: block; min-width: 0; width: 100%; }
+      thead { display: none; }
+      tr { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 0.625rem; box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14); margin-bottom: 10px; overflow: hidden; }
+      td { border-bottom: 1px solid var(--cp-border); display: grid; font-size: 13px; gap: 10px; grid-template-columns: 108px minmax(0, 1fr); padding: 10px 12px; }
+      td::before { color: var(--cp-text-muted); content: attr(data-label); font-size: 11px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+      tr:last-child td { border-bottom: 1px solid var(--cp-border); }
+      td:last-child { border-bottom: 0; }
+      .sources { gap: 6px; }
+      .source { border-radius: 0.625rem; display: block; padding: 24px 10px 8px; }
+      .source::before { left: 10px; top: 6px; }
     }
   </style>
 </head>
@@ -174,6 +194,14 @@
     </div></section>
   </main>
   <script>
+    document.querySelectorAll('table').forEach((table) => {
+      const labels = Array.from(table.querySelectorAll('thead th')).map((th) => th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach((row) => {
+        Array.from(row.children).forEach((cell, index) => {
+          if (labels[index]) cell.setAttribute('data-label', labels[index]);
+        });
+      });
+    });
     document.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach((anchor) => {
       anchor.setAttribute('target', '_blank');
       anchor.setAttribute('rel', 'noopener noreferrer');
