@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azure + AI Updates</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      margin: 0;
+    }
+    a { color: var(--cp-link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page {
+      margin: 0 auto;
+      max-width: 1060px;
+      padding: 22px 28px 56px;
+    }
+    .top {
+      align-items: center;
+      border-bottom: 1px solid var(--cp-border);
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      padding-bottom: 14px;
+    }
+    .brand {
+      color: var(--cp-text);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .brand span { color: var(--cp-link); }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: flex-end;
+    }
+    .nav a {
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .masthead {
+      border-bottom: 1px solid var(--cp-border);
+      padding: 24px 0 22px;
+    }
+    h1 {
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -0.045em;
+      line-height: 1;
+      margin: 0 0 8px;
+    }
+    .subtitle {
+      color: var(--cp-text-muted);
+      font-size: 16px;
+      margin: 0 0 6px;
+      max-width: 760px;
+    }
+    .run-meta {
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0;
+    }
+    .section {
+      margin-top: 30px;
+    }
+    .section-header {
+      align-items: baseline;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 24px;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin: 0;
+    }
+    .section-note {
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      margin: 0;
+    }
+    .feed {
+      border-top: 1px solid var(--cp-border);
+    }
+    .update {
+      border-bottom: 1px solid var(--cp-border);
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      padding: 24px 0;
+    }
+    .update.primary { padding-top: 28px; }
+    .update h3 {
+      font-size: 23px;
+      letter-spacing: -0.02em;
+      line-height: 1.22;
+      margin: 0 0 8px;
+    }
+    .update.primary h3 {
+      font-size: 31px;
+      letter-spacing: -0.035em;
+    }
+    .update.secondary h3 {
+      font-size: 27px;
+      letter-spacing: -0.03em;
+    }
+    .meta {
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .summary {
+      color: var(--cp-text);
+      font-size: 15.5px;
+      margin: 0;
+      max-width: 740px;
+    }
+    .summary + .summary { margin-top: 9px; }
+    .links {
+      align-self: start;
+      display: grid;
+      gap: 8px;
+      justify-items: start;
+      padding-top: 31px;
+    }
+    .links a {
+      border-bottom: 2px solid var(--cp-link);
+      color: var(--cp-link);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.25;
+      padding-bottom: 1px;
+    }
+    .links span {
+      color: var(--cp-text-muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+    .ai-list {
+      border-top: 1px solid var(--cp-border);
+    }
+    .ai-item {
+      border-bottom: 1px solid var(--cp-border);
+      padding: 18px 0;
+    }
+    .ai-item h3 {
+      font-size: 20px;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 0 0 6px;
+    }
+    .ai-item p {
+      color: var(--cp-text);
+      font-size: 15px;
+      margin: 0;
+      max-width: 820px;
+    }
+    .follow-up {
+      border-top: 1px solid var(--cp-border);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .follow-up article {
+      border-bottom: 1px solid var(--cp-border);
+      padding: 18px 24px 18px 0;
+    }
+    .follow-up article:nth-child(odd) {
+      border-right: 1px solid var(--cp-border);
+      padding-right: 24px;
+    }
+    .follow-up article:nth-child(even) {
+      padding-left: 24px;
+    }
+    .follow-up strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .follow-up p {
+      color: var(--cp-text-muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    .refs {
+      border-top: 1px solid var(--cp-border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      padding-top: 16px;
+    }
+    .refs a {
+      color: var(--cp-link);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    @media (max-width: 760px) {
+      .page { padding: 16px 16px 44px; }
+      .top { align-items: flex-start; flex-direction: column; gap: 9px; padding-bottom: 12px; }
+      .nav { gap: 10px; justify-content: flex-start; }
+      .masthead { padding: 18px 0 18px; }
+      h1 { font-size: 34px; }
+      .subtitle { font-size: 14px; }
+      .section { margin-top: 24px; }
+      .section-header { align-items: flex-start; flex-direction: column; gap: 2px; }
+      .update {
+        gap: 10px;
+        grid-template-columns: 1fr;
+        padding: 20px 0;
+      }
+      .update.primary { padding-top: 22px; }
+      .update.primary h3 { font-size: 25px; }
+      .update.secondary h3 { font-size: 23px; }
+      .update h3 { font-size: 21px; }
+      .summary { font-size: 15px; }
+      .links {
+        border-top: 1px solid var(--cp-border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        padding-top: 10px;
+      }
+      .links span { flex-basis: 100%; }
+      .follow-up { grid-template-columns: 1fr; }
+      .follow-up article,
+      .follow-up article:nth-child(odd),
+      .follow-up article:nth-child(even) {
+        border-right: 0;
+        padding: 16px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="top" aria-label="Page navigation">
+      <div class="brand">Microsoft <span>| Azure</span></div>
+      <div class="nav">
+        <a href="#updates">Updates</a>
+        <a href="#ai-updates">AI updates</a>
+        <a href="#follow-up">Follow-up</a>
+        <a href="#references">References</a>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <h1>Azure + AI Updates</h1>
+      <p class="subtitle">Azure Infrastructure | AI Radar | Microsoft Entra | Security | Platform Engineering</p>
+      <p class="run-meta">May 26, 2026 | 7 AM</p>
+    </header>
+
+    <section class="section" id="updates">
+      <div class="section-header">
+        <h2>Updates</h2>
+        <p class="section-note">Newest and most useful first</p>
+      </div>
+
+      <div class="feed">
+        <article class="update primary">
+          <div>
+            <div class="meta">May 26, 2026 · GitHub · Platform engineering</div>
+            <h3>GitHub adds code coverage to pull requests</h3>
+            <p class="summary">GitHub Code Quality can now show aggregate code coverage directly in pull requests. Teams upload Cobertura reports from existing CI workflows using the upload-code-coverage action, and workflows use a new fine-grained code-quality write permission.</p>
+            <p class="summary">This matters because AI-assisted coding increases the number and speed of code changes. Coverage is not a complete quality or safety measure, but putting it in the pull request makes it harder to ignore during review.</p>
+          </div>
+          <aside class="links">
+            <a href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a>
+            <a href="https://docs.github.com/code-security/how-tos/maintain-quality-code/set-up-code-coverage" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Docs</a>
+            <span>Useful for app modernization, CI/CD, and AI-generated pull request governance.</span>
+          </aside>
+        </article>
+
+        <article class="update secondary">
+          <div>
+            <div class="meta">May 2026 · Microsoft Learn · AI platform</div>
+            <h3>Microsoft Foundry model router adds more models</h3>
+            <p class="summary">Microsoft’s model router documentation lists May 2026 updates that expand support to 28 models and raise quota limits across GlobalStandard and DataZoneStandard deployment types. The added models include newer GPT, Claude, and Grok options, with some preview caveats.</p>
+            <p class="summary">The important point is not the model list by itself. Model routing is becoming a platform design choice: how to balance cost, quality, latency, data-zone requirements, and fallback behavior without making every application own model selection logic.</p>
+          </div>
+          <aside class="links">
+            <a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Model router updates</a>
+            <a href="https://learn.microsoft.com/azure/foundry/openai/concepts/model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Concepts</a>
+            <span>Useful for Azure AI architecture and platform governance.</span>
+          </aside>
+        </article>
+
+        <article class="update">
+          <div>
+            <div class="meta">May 25, 2026 · Hugging Face · AI agents</div>
+            <h3>Hugging Face publishes AI agent glossary</h3>
+            <p class="summary">Hugging Face published a glossary for terms like harness, scaffold, tools, memory, and evaluation. This is useful because agent conversations often mix implementation details, product claims, and architecture assumptions into one vague word.</p>
+            <p class="summary">For technical reviews, plain language matters. Before building or approving an agent, it should be clear what orchestrates it, what tools it can call, what memory it uses, where human approval happens, and how outputs are evaluated.</p>
+          </div>
+          <aside class="links">
+            <a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Agent glossary</a>
+            <span>Useful for agent design reviews and workshop prep.</span>
+          </aside>
+        </article>
+
+        <article class="update">
+          <div>
+            <div class="meta">May 25, 2026 · OpenAI · Grounded AI</div>
+            <h3>OpenAI announces content partnership with Grupo Folha and Grupo UOL</h3>
+            <p class="summary">OpenAI announced a content partnership to bring Brazilian journalism into ChatGPT with attribution and transparency. This is not an Azure infrastructure update, but it is relevant to how providers are framing trusted content and source attribution.</p>
+            <p class="summary">For enterprise AI, the connected issue is grounding. Customers need to know which answers come from public content, which come from private organizational data, how sources are shown, and how freshness and retention are handled.</p>
+          </div>
+          <aside class="links">
+            <a href="https://openai.com/index/grupo-folha-grupo-uol-partnership" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI</a>
+            <span>Useful for provenance and grounding discussions.</span>
+          </aside>
+        </article>
+
+        <article class="update">
+          <div>
+            <div class="meta">May 25, 2026 update · NVIDIA · AI infrastructure</div>
+            <h3>NVIDIA continues GTC Taipei updates</h3>
+            <p class="summary">NVIDIA’s GTC Taipei live updates continued, though the latest visible update was light on architecture detail. The event is still worth watching because it is likely to shape AI factory, GPU platform, edge AI, robotics, and agent runtime conversations.</p>
+            <p class="summary">The useful thread is infrastructure planning. AI roadmaps need capacity, power, networking, GPU scheduling, operations, cost, and governance assumptions, not just model preferences.</p>
+          </div>
+          <aside class="links">
+            <a href="https://blogs.nvidia.com/blog/nvidia-gtc-taipei-computex-2026-news/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA live updates</a>
+            <span>Watch for concrete architecture announcements.</span>
+          </aside>
+        </article>
+
+        <article class="update">
+          <div>
+            <div class="meta">May 22, 2026 · Azure Blog · AKS</div>
+            <h3>Azure Kubernetes Fleet Manager adds cross-cluster networking preview</h3>
+            <p class="summary">Azure Kubernetes Fleet Manager added a public preview for cross-cluster networking using Cilium and Advanced Container Networking Services. It supports cross-cluster connectivity, global service discovery, policy, and observability across member clusters.</p>
+            <p class="summary">This remains useful even though it is a carry-forward item. It helps frame multi-region AKS, shared services, failover, and platform ownership without starting from custom VPN and service-discovery plumbing.</p>
+          </div>
+          <aside class="links">
+            <a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Blog</a>
+            <a href="https://learn.microsoft.com/en-us/azure/kubernetes-fleet/concepts-cross-cluster-networking" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Docs</a>
+            <span>Useful for AKS resilience and platform engineering.</span>
+          </aside>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="ai-updates">
+      <div class="section-header">
+        <h2>AI updates</h2>
+        <p class="section-note">Short notes from the broader AI scan</p>
+      </div>
+      <div class="ai-list">
+        <article class="ai-item">
+          <div class="meta">May 2026 · Microsoft Learn · Model routing</div>
+          <h3>Model router support expands in Microsoft Foundry</h3>
+          <p>Read this as an architecture signal: model choice is becoming something a platform can manage centrally. Follow up by sketching routing rules for cost, latency, data zone, model exclusions, and fallback behavior.</p>
+        </article>
+        <article class="ai-item">
+          <div class="meta">May 25, 2026 · Hugging Face · AI agents</div>
+          <h3>Agent terms get a plain-language reference</h3>
+          <p>This helps separate what an agent is from what a workflow, tool call, memory store, or evaluator is. Follow up by turning the glossary into a checklist for reviewing agent proposals.</p>
+        </article>
+        <article class="ai-item">
+          <div class="meta">May 25, 2026 · OpenAI · Content grounding</div>
+          <h3>OpenAI adds another content partnership</h3>
+          <p>The relevant point is source handling. Follow up by writing down how an AI app should show sources, separate public and private grounding, and handle freshness.</p>
+        </article>
+        <article class="ai-item">
+          <div class="meta">May 25, 2026 update · NVIDIA · AI infrastructure</div>
+          <h3>NVIDIA GTC Taipei remains worth watching</h3>
+          <p>Do not overread the light live-blog updates. Watch for concrete announcements about GPU systems, networking, edge AI, and runtime patterns.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="follow-up">
+      <div class="section-header"><h2>Follow-up</h2></div>
+      <div class="follow-up">
+        <article><strong>Build a PR quality gate lab.</strong><p>Add Cobertura coverage upload to a sample GitHub Actions workflow. Include code owners, branch protection, and expectations for AI-generated pull requests.</p></article>
+        <article><strong>Create a model router worksheet.</strong><p>Capture model families, routing profile, excluded models, data-zone requirement, latency target, cost target, fallback behavior, logging, and evaluation plan.</p></article>
+        <article><strong>Draft an agent design review template.</strong><p>Require teams to name the harness, scaffold, tools, memory, approvals, identity, audit trail, and eval set before building a demo.</p></article>
+        <article><strong>Update the AKS fleet notes.</strong><p>Add service discovery, Cilium policy, failover flow, observability, and platform-team ownership questions.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="references">
+      <div class="section-header"><h2>References</h2></div>
+      <div class="refs">
+        <a href="https://github.blog/changelog/2026-05-26-code-coverage-in-pull-requests-is-now-in-public-preview" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub code coverage</a>
+        <a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Foundry model router</a>
+        <a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Agent glossary</a>
+        <a href="https://openai.com/index/grupo-folha-grupo-uol-partnership" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI content partnership</a>
+        <a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">AKS Fleet networking</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
