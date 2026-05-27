@@ -4,10 +4,107 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Azure + AI Updates</title>
-  <meta http-equiv="refresh" content="0; url=updates/2026-05-27-7am.html" />
-  <script>location.replace("updates/2026-05-27-7am.html");</script>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+      const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <style>
+    :root { color-scheme: light; --cp-bg: #f7f4ef; --cp-bg-elevated: #fcfbf8; --cp-surface: #ffffff; --cp-surface-soft: #f5f5f5; --cp-border: #dedede; --cp-border-strong: #919191; --cp-text: #242424; --cp-text-muted: #5c5c5c; --cp-text-soft: #6f6f6f; --cp-accent: #b11f4b; --cp-accent-hover: #9a1a41; --cp-accent-soft: rgba(177, 31, 75, 0.08); --cp-accent-fg: #ffffff; --cp-success: #16a34a; --cp-danger: #dc2626; --cp-warning: #f59e0b; --cp-link: #0078d4; --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12); --cp-overlay: rgba(255, 255, 255, 0.8); --cp-panel: rgba(255, 255, 255, 0.86); --cp-panel-strong: rgba(255, 255, 255, 0.96); --cp-sheen: rgba(255, 255, 255, 0.55); --cp-highlight: rgba(177, 31, 75, 0.12); }
+    html[data-theme="dark"] { color-scheme: dark; --cp-bg: #3d3b3a; --cp-bg-elevated: #343231; --cp-surface: #292929; --cp-surface-soft: #2e2e2e; --cp-border: #474747; --cp-border-strong: #5f5f5f; --cp-text: #dedede; --cp-text-muted: #919191; --cp-text-soft: #b0b0b0; --cp-accent: #fd8ea1; --cp-accent-hover: #fb7b91; --cp-accent-soft: rgba(253, 142, 161, 0.14); --cp-accent-fg: #1a1a1a; --cp-success: #4ade80; --cp-danger: #f87171; --cp-warning: #fbbf24; --cp-link: #4da6ff; --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32); --cp-overlay: rgba(41, 41, 41, 0.88); --cp-panel: rgba(41, 41, 41, 0.72); --cp-panel-strong: rgba(41, 41, 41, 0.96); --cp-sheen: rgba(255, 255, 255, 0.04); --cp-highlight: rgba(253, 142, 161, 0.12); }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; scroll-behavior: smooth; }
+    body { background: var(--cp-surface); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.55; margin: 0; }
+    a { color: var(--cp-link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { margin: 0 auto; max-width: 920px; padding: 20px 24px 56px; }
+    .top { align-items: center; border-bottom: 1px solid var(--cp-border); display: flex; gap: 20px; justify-content: space-between; padding-bottom: 12px; }
+    .brand { color: var(--cp-text); font-size: 14px; font-weight: 700; }
+    .brand span { color: var(--cp-link); }
+    .nav { display: flex; gap: 16px; }
+    .nav a { border-bottom: 2px solid transparent; color: var(--cp-text-muted); font-size: 13px; font-weight: 700; padding-bottom: 3px; }
+    .nav a:hover { border-bottom-color: var(--cp-link); color: var(--cp-text); text-decoration: none; }
+    .masthead { padding: 22px 0 18px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.035em; line-height: 1.05; margin: 0 0 6px; }
+    .subtitle { color: var(--cp-text-muted); font-size: 15px; margin: 0 0 4px; }
+    .run-meta { color: var(--cp-text-muted); font-size: 13px; font-weight: 600; margin: 0; }
+    .section { border-top: 1px solid var(--cp-border); margin-top: 22px; padding-top: 22px; }
+    .section-row { align-items: baseline; display: flex; gap: 12px; justify-content: space-between; margin-bottom: 8px; }
+    h2 { font-size: 22px; letter-spacing: -0.02em; margin: 0; }
+    .section-note { color: var(--cp-text-muted); font-size: 13px; margin: 0; }
+    .feed { border-top: 1px solid var(--cp-border); }
+    .update { border-bottom: 1px solid var(--cp-border); padding: 22px 0; }
+    .update h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.24; margin: 0 0 8px; }
+    .update.primary h3 { font-size: 28px; letter-spacing: -0.03em; }
+    .update.secondary h3 { font-size: 25px; letter-spacing: -0.025em; }
+    .meta { color: var(--cp-text-muted); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .summary { color: var(--cp-text); font-size: 15.5px; margin: 0; max-width: 760px; }
+    .summary + .summary { margin-top: 8px; }
+    .source-links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 12px; }
+    .source-links a { font-size: 14px; font-weight: 700; }
+    .source-note { color: var(--cp-text-muted); flex-basis: 100%; font-size: 13px; }
+    .compact-list { border-top: 1px solid var(--cp-border); }
+    .compact-item { border-bottom: 1px solid var(--cp-border); padding: 16px 0; }
+    .compact-item h3 { font-size: 19px; letter-spacing: -0.015em; margin: 0 0 5px; }
+    .compact-item p { margin: 0; }
+    .follow-up { display: grid; gap: 0 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--cp-border); }
+    .follow-up article { border-bottom: 1px solid var(--cp-border); padding: 16px 0; }
+    .follow-up strong { display: block; margin-bottom: 4px; }
+    .follow-up p { color: var(--cp-text-muted); font-size: 14px; margin: 0; }
+    .refs { border-top: 1px solid var(--cp-border); display: flex; flex-wrap: wrap; gap: 10px 18px; padding-top: 14px; }
+    .refs a { font-size: 14px; font-weight: 700; }
+    @media (max-width: 700px) { .page { padding: 16px 16px 44px; } .top { align-items: flex-start; flex-direction: column; gap: 8px; } .nav { flex-wrap: wrap; gap: 10px; } .masthead { padding: 18px 0 16px; } h1 { font-size: 31px; } .subtitle { font-size: 14px; } .section { margin-top: 20px; padding-top: 20px; } .section-row { align-items: flex-start; flex-direction: column; gap: 2px; } .update { padding: 19px 0; } .update.primary h3 { font-size: 24px; } .update.secondary h3 { font-size: 23px; } .update h3 { font-size: 20px; } .summary { font-size: 15px; } .follow-up { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <p><a href="updates/2026-05-27-7am.html">Azure + AI Updates</a></p>
+  <main class="page">
+    <nav class="top" aria-label="Page navigation">
+      <div class="brand">Microsoft <span>| Azure</span></div>
+      <div class="nav"><a href="#updates">Updates</a><a href="#ai-updates">AI updates</a><a href="#security-identity">Security and identity</a><a href="#follow-up">Follow-up</a><a href="#references">References</a></div>
+    </nav>
+    <header class="masthead"><h1>Azure + AI Updates</h1><p class="subtitle">Azure Infrastructure | AI Radar | Microsoft Entra | Security | Platform Engineering</p><p class="run-meta">May 27, 2026 | 7 AM</p></header>
+
+    <section class="section" id="updates">
+      <div class="section-row"><h2>Updates</h2><p class="section-note">Newest and most useful first</p></div>
+      <div class="feed">
+        <article class="update primary"><div class="meta">May 26, 2026 · NVIDIA · AI infrastructure</div><h3>NVIDIA details Vera CPU performance for AI factories</h3><p class="summary">NVIDIA published a technical post on Vera CPU benchmark results, with a focus on agentic AI and AI factory workloads. The post describes 88 custom Olympus cores, 1.2 TB/s of memory bandwidth, and sustained memory performance for CPU-heavy work such as code compilation, runtimes, compression, databases, and orchestration.</p><p class="summary">This is the most relevant infrastructure item in the window because it connects AI demand to CPU, memory bandwidth, power, and datacenter design. It is not an Azure announcement, but it is directly tied to the hardware assumptions behind AI infrastructure planning.</p><div class="source-links"><a href="https://blogs.nvidia.com/blog/vera-cpu-phoronix/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA</a><a href="https://www.phoronix.com/review/nvidia-vera-benchmarks" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Phoronix</a><span class="source-note">Useful for AI infrastructure planning, capacity assumptions, and datacenter architecture notes.</span></div></article>
+
+        <article class="update secondary"><div class="meta">May 26, 2026 · Microsoft Security Blog · Endpoint security</div><h3>Microsoft details cryptojacking campaign abusing ScreenConnect and .NET utilities</h3><p class="summary">Microsoft Defender researchers documented a cryptojacking campaign that uses SEO poisoning, fake utility downloads, DLL sideloading, ScreenConnect abuse, and GPU mining. The campaign targets users likely to have high-performance GPUs and also includes evidence of malicious links surfaced through AI chatbot interactions.</p><p class="summary">This belongs high in the feed because it crosses security, endpoint operations, AI search behavior, and GPU-heavy systems. For HLS and research environments, the practical takeaway is that high-performance workstations and unmanaged utility downloads remain a real security exposure.</p><div class="source-links"><a href="https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a><span class="source-note">Useful for endpoint security, research workstation risk, and AI-assisted search poisoning awareness.</span></div></article>
+
+        <article class="update"><div class="meta">May 26, 2026 · GitHub · Platform engineering</div><h3>GitHub adds Code Quality Repository Enablement API</h3><p class="summary">GitHub added public preview API endpoints to programmatically enable and configure GitHub Code Quality on individual repositories. The API can enable or disable default setup, configure languages, specify runner type, and retrieve current configuration.</p><p class="summary">This extends the 7 AM code coverage item into a more operational platform story. If code quality and coverage are going to become standard controls, platform teams need automation for rollout and configuration across repositories.</p><div class="source-links"><a href="https://github.blog/changelog/2026-05-26-github-code-quality-repository-enablement-api" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a><a href="https://docs.github.com/code-security/concepts/about-code-quality" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Code Quality docs</a><span class="source-note">Useful for repo governance, CI/CD standards, and platform automation.</span></div></article>
+
+        <article class="update"><div class="meta">May 26, 2026 · Azure Blog · AKS</div><h3>Azure Kubernetes Fleet Manager cross-cluster networking remains the key Azure infrastructure item</h3><p class="summary">Azure Kubernetes Fleet Manager cross-cluster networking remains the most useful Azure infrastructure carry-forward item from the prior window. The public preview uses Cilium and Advanced Container Networking Services for cross-cluster connectivity, global service discovery, policy, and observability.</p><p class="summary">It still matters because it maps cleanly to multi-region AKS, shared services, failover, and platform ownership. There was no newer Azure Blog infrastructure item in the tracked feeds that displaced it for this run.</p><div class="source-links"><a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Blog</a><a href="https://learn.microsoft.com/en-us/azure/kubernetes-fleet/concepts-cross-cluster-networking" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Docs</a></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="ai-updates"><div class="section-row"><h2>AI updates</h2><p class="section-note">Short notes from the broader AI scan</p></div><div class="compact-list">
+      <article class="compact-item"><div class="meta">May 26, 2026 · GitHub · Copilot governance</div><h3>GitHub adds Copilot model rules for organizations</h3><p>Enterprise owners can target which Copilot models are available to specific organizations. This is useful for AI governance because model availability can now vary by organization instead of only using one enterprise-wide default.</p><div class="source-links"><a href="https://github.blog/changelog/2026-05-26-target-copilot-models-to-organizations-with-model-rules" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a></div></article>
+      <article class="compact-item"><div class="meta">May 26, 2026 · GitHub · Copilot memory</div><h3>GitHub adds more Copilot Memory controls</h3><p>Copilot Memory now has clearer deletion guidance, repository-level disablement, CLI controls, and clearer scope prompts. This is worth tracking because persistent memory creates governance questions around user-level preferences, repository-level facts, and contributor visibility.</p><div class="source-links"><a href="https://github.blog/changelog/2026-05-26-copilot-memory-has-more-controls-for-deletion-scope-and-the-copilot-cli" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a></div></article>
+      <article class="compact-item"><div class="meta">May 25, 2026 · OpenAI · Content grounding</div><h3>OpenAI content partnership remains relevant for grounding</h3><p>OpenAI’s Grupo Folha and Grupo UOL partnership remains relevant as a grounding and attribution signal. Keep the focus on how AI apps show sources, separate public and private grounding, and handle freshness.</p><div class="source-links"><a href="https://openai.com/index/grupo-folha-grupo-uol-partnership" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI</a></div></article>
+    </div></section>
+
+    <section class="section" id="security-identity"><div class="section-row"><h2>Security and identity</h2><p class="section-note">Entra, access, and agent identity</p></div><div class="compact-list">
+      <article class="compact-item"><div class="meta">May 26, 2026 · Microsoft Security Blog · Endpoint security</div><h3>Microsoft documents AI-assisted search poisoning in cryptojacking campaign</h3><p>The campaign is notable because malicious sites were observed through both conventional search poisoning and AI chatbot interactions. The security question is whether users trust generated software recommendations enough to bypass normal download hygiene.</p><div class="source-links"><a href="https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a></div></article>
+      <article class="compact-item"><div class="meta">May 26, 2026 · GitHub · Secret scanning</div><h3>GitHub secret scanning bypass filters remain relevant</h3><p>Yesterday’s GitHub secret scanning update remains useful for exception management. For large repositories or organizations, the question is not only whether push protection exists, but whether bypasses and dismissals are reviewable, queryable, and auditable.</p><div class="source-links"><a href="https://github.blog/changelog/2026-05-26-filter-secret-scanning-approval-requests-by-sort-order-and-bypass-status" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a></div></article>
+    </div></section>
+
+    <section class="section" id="follow-up"><div class="section-row"><h2>Follow-up</h2></div><div class="follow-up">
+      <article><strong>Update AI infrastructure notes for CPU and memory pressure.</strong><p>Add Vera CPU takeaways to the AI infrastructure worksheet: CPU-heavy agent runtimes, memory bandwidth, power envelope, and datacenter fit.</p></article>
+      <article><strong>Review endpoint controls for high-performance workstations.</strong><p>Check what guidance you have for GPU workstations, utility downloads, ScreenConnect exposure, EDR in block mode, and attack surface reduction rules.</p></article>
+      <article><strong>Sketch a GitHub Code Quality rollout checklist.</strong><p>Include repository enablement API, supported languages, runner type, coverage upload, branch policies, and ownership.</p></article>
+      <article><strong>Keep AKS fleet networking in the infra backlog.</strong><p>Continue building the AKS fleet worksheet for service discovery, failover flow, Cilium policy, observability, and platform-team ownership.</p></article>
+    </div></section>
+
+    <section class="section" id="references"><div class="section-row"><h2>References</h2></div><div class="refs">
+      <a href="https://blogs.nvidia.com/blog/vera-cpu-phoronix/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA Vera CPU</a>
+      <a href="https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft cryptojacking research</a>
+      <a href="https://github.blog/changelog/2026-05-26-github-code-quality-repository-enablement-api" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub Code Quality API</a>
+      <a href="https://github.blog/changelog/2026-05-26-target-copilot-models-to-organizations-with-model-rules" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Copilot model rules</a>
+      <a href="https://azure.microsoft.com/en-us/blog/powering-multi-cluster-workloads-with-seamless-cross-cluster-networking-for-azure-kubernetes-fleet-manager/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">AKS Fleet networking</a>
+    </div></section>
+  </main>
 </body>
 </html>
