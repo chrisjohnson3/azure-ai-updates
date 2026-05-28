@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azure + AI Updates</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script>
+    document.documentElement.setAttribute("data-theme", "light");
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; scroll-behavior: smooth; }
+    body {
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      margin: 0;
+    }
+    a { color: var(--cp-link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { margin: 0 auto; max-width: 920px; padding: 20px 24px 56px; }
+    .top { align-items: center; border-bottom: 1px solid var(--cp-border); display: flex; gap: 20px; justify-content: space-between; padding-bottom: 12px; }
+    .brand { color: var(--cp-text); font-size: 14px; font-weight: 700; }
+    .brand span { color: var(--cp-link); }
+    .nav { align-items: center; display: flex; flex-wrap: wrap; gap: 14px; }
+    .nav a, .sources summary { border-bottom: 2px solid transparent; color: var(--cp-text-muted); cursor: pointer; font-size: 13px; font-weight: 700; padding-bottom: 3px; }
+    .nav a:hover, .sources summary:hover { border-bottom-color: var(--cp-link); color: var(--cp-text); text-decoration: none; }
+    .sources { position: relative; }
+    .sources summary { list-style: none; }
+    .sources summary::-webkit-details-marker { display: none; }
+    .source-menu { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 0.625rem; box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14); display: grid; gap: 8px 18px; grid-template-columns: repeat(2, minmax(160px, 1fr)); min-width: 390px; padding: 14px; position: absolute; right: 0; top: 28px; z-index: 10; }
+    .source-menu a { color: var(--cp-link); font-size: 13px; font-weight: 700; }
+    .masthead { padding: 22px 0 18px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.035em; line-height: 1.05; margin: 0 0 6px; }
+    .subtitle { color: var(--cp-text-muted); font-size: 15px; margin: 0 0 4px; }
+    .run-meta { color: var(--cp-text-muted); font-size: 13px; font-weight: 600; margin: 0; }
+    .section { border-top: 1px solid var(--cp-border); margin-top: 22px; padding-top: 22px; }
+    .section-row { align-items: baseline; display: flex; gap: 12px; justify-content: space-between; margin-bottom: 8px; }
+    h2 { font-size: 22px; letter-spacing: -0.02em; margin: 0; }
+    .section-note { color: var(--cp-text-muted); font-size: 13px; margin: 0; }
+    .feed { border-top: 1px solid var(--cp-border); }
+    .update { border-bottom: 1px solid var(--cp-border); padding: 22px 0; }
+    .update h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.24; margin: 0 0 8px; }
+    .update.primary h3 { font-size: 28px; letter-spacing: -0.03em; }
+    .update.secondary h3 { font-size: 25px; letter-spacing: -0.025em; }
+    .meta { color: var(--cp-text-muted); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .summary { color: var(--cp-text); font-size: 15.5px; margin: 0; max-width: 760px; }
+    .summary + .summary { margin-top: 8px; }
+    .source-links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 12px; }
+    .source-links a { font-size: 14px; font-weight: 700; }
+    .source-note { color: var(--cp-text-muted); flex-basis: 100%; font-size: 13px; }
+    .compact-list { border-top: 1px solid var(--cp-border); }
+    .compact-item { border-bottom: 1px solid var(--cp-border); padding: 16px 0; }
+    .compact-item h3 { font-size: 19px; letter-spacing: -0.015em; margin: 0 0 5px; }
+    .compact-item p { margin: 0; }
+    .follow-up { border-top: 1px solid var(--cp-border); display: grid; gap: 0 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .follow-up article { border-bottom: 1px solid var(--cp-border); padding: 16px 0; }
+    .follow-up strong { display: block; margin-bottom: 4px; }
+    .follow-up p { color: var(--cp-text-muted); font-size: 14px; margin: 0; }
+    @media (max-width: 700px) {
+      .page { padding: 16px 16px 44px; }
+      .top { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .nav { gap: 10px; }
+      .sources { width: 100%; }
+      .source-menu { grid-template-columns: 1fr; left: 0; min-width: 0; right: auto; width: min(100%, 360px); }
+      .masthead { padding: 18px 0 16px; }
+      h1 { font-size: 31px; }
+      .subtitle { font-size: 14px; }
+      .section { margin-top: 20px; padding-top: 20px; }
+      .section-row { align-items: flex-start; flex-direction: column; gap: 2px; }
+      .update { padding: 19px 0; }
+      .update.primary h3 { font-size: 24px; }
+      .update.secondary h3 { font-size: 23px; }
+      .update h3 { font-size: 20px; }
+      .summary { font-size: 15px; }
+      .follow-up { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="top" aria-label="Page navigation">
+      <div class="brand">Microsoft <span>| Azure</span></div>
+      <div class="nav">
+        <a href="#updates">Updates</a>
+        <a href="#ai-updates">AI updates</a>
+        <a href="#security-identity">Security and identity</a>
+        <a href="#follow-up">Follow-up</a>
+        <details class="sources">
+          <summary>Sources</summary>
+          <div class="source-menu">
+            <a href="https://azure.microsoft.com/updates/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Updates</a>
+            <a href="https://azure.microsoft.com/blog/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Blog</a>
+            <a href="https://techcommunity.microsoft.com/category/azure/blog/azurearcblog" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Arc Blog</a>
+            <a href="https://techcommunity.microsoft.com/category/azure" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure Tech Community</a>
+            <a href="https://techcommunity.microsoft.com/category/windows-server/blog/windowsservernewsandbestpractices" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Windows Server</a>
+            <a href="https://learn.microsoft.com/azure/ai-foundry/openai/whats-new" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure OpenAI updates</a>
+            <a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Foundry model router</a>
+            <a href="https://www.microsoft.com/security/blog/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a>
+            <a href="https://techcommunity.microsoft.com/category/microsoft-entra/blog/microsoft-entra-blog" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Entra Blog</a>
+            <a href="https://github.blog/changelog/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub Changelog</a>
+            <a href="https://blogs.nvidia.com/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">NVIDIA Blog</a>
+            <a href="https://openai.com/news/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">OpenAI News</a>
+            <a href="https://blog.google/technology/ai/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Google AI Blog</a>
+            <a href="https://huggingface.co/blog" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Hugging Face Blog</a>
+            <a href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">CISA Advisories</a>
+          </div>
+        </details>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <h1>Azure + AI Updates</h1>
+      <p class="subtitle">Azure Infrastructure | AI Radar | Microsoft Entra | Security | Platform Engineering</p>
+      <p class="run-meta">May 28, 2026 | 7 AM MDT</p>
+    </header>
+
+    <section class="section" id="updates">
+      <div class="section-row">
+        <h2>Updates</h2>
+        <p class="section-note">Recent public updates, infrastructure first</p>
+      </div>
+
+      <div class="feed">
+        <article class="update primary">
+          <div class="meta">May 28, 2026 · Azure Updates · Networking</div>
+          <h3>Generally Available: Application Gateway for Containers - Service Mesh integration with Istio</h3>
+          <p class="summary">Application Gateway for Containers service mesh integration with Istio is generally available. The update focuses on secure north-south traffic into workloads running in an Istio service mesh and automates mutual TLS connectivity between Application Gateway for Containers and the mesh.</p>
+          <p class="summary">This is useful for AKS and platform teams standardizing ingress patterns across Kubernetes estates. It reduces some of the manual work around certificates and mTLS boundary handling, but it still needs review against existing ingress controller, service mesh, and network policy standards before adoption.</p>
+          <div class="source-links">
+            <a href="https://azure.microsoft.com/updates?id=564714" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure update</a>
+            <span class="source-note">Relevant to AKS ingress, service mesh operations, and secure application publishing.</span>
+          </div>
+        </article>
+
+        <article class="update secondary">
+          <div class="meta">May 26, 2026 · Azure Updates · Networking</div>
+          <h3>Public Preview: Azure Virtual Network Manager integration with Virtual WAN</h3>
+          <p class="summary">Azure Virtual Network Manager integration with Virtual WAN is now in public preview. The feature lets teams use an Azure Virtual WAN hub as the hub in Azure Virtual Network Manager hub-and-spoke connectivity configurations.</p>
+          <p class="summary">The operational value is simpler network governance when environments already use Virtual WAN for branch, hybrid, or large hub-and-spoke connectivity. Platform teams should treat this as a preview feature for design validation, especially around route intent, policy boundaries, and how AVNM-managed topology interacts with existing Virtual WAN routing design.</p>
+          <div class="source-links">
+            <a href="https://azure.microsoft.com/updates?id=564478" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure update</a>
+            <span class="source-note">Relevant to landing zones, hybrid connectivity, network governance, and platform operations.</span>
+          </div>
+        </article>
+
+        <article class="update">
+          <div class="meta">May 26, 2026 · Azure Updates · Observability</div>
+          <h3>Generally Available: Virtual network flow logs connector with Microsoft Sentinel</h3>
+          <p class="summary">Azure virtual network flow logs connector with Microsoft Sentinel is generally available. The connector exports network traffic data into Sentinel so security teams can analyze network activity alongside incident and detection workflows.</p>
+          <p class="summary">For infrastructure teams, this is a practical bridge between network observability and security operations. It can help with lateral movement investigations, rule-change validation, and hybrid traffic review, but teams should confirm ingestion volume, retention, and analytics costs before enabling it broadly.</p>
+          <div class="source-links">
+            <a href="https://azure.microsoft.com/updates?id=564689" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Azure update</a>
+          </div>
+        </article>
+
+        <article class="update">
+          <div class="meta">May 26, 2026 · GitHub · Platform engineering</div>
+          <h3>GitHub Code Quality: Repository Enablement API</h3>
+          <p class="summary">GitHub added a Repository Enablement API for GitHub Code Quality in public preview. The new endpoints let teams enable or disable default setup for a repository, configure analyzed languages, choose runner type, and retrieve the current configuration.</p>
+          <p class="summary">This matters for platform engineering because code-quality controls can be managed at scale instead of as one-off repository settings. It is a good fit for organizations standardizing quality gates across application modernization, AI-assisted development, and inner-source repositories.</p>
+          <div class="source-links">
+            <a href="https://github.blog/changelog/2026-05-26-github-code-quality-repository-enablement-api" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="ai-updates">
+      <div class="section-row">
+        <h2>AI updates</h2>
+        <p class="section-note">AI infrastructure, agents, inference, and governance</p>
+      </div>
+      <div class="feed">
+        <article class="update">
+          <div class="meta">May 2026 · Microsoft Learn · AI platform</div>
+          <h3>What's new in model router in Microsoft Foundry Models?</h3>
+          <p class="summary">Microsoft Learn lists May updates for model router in Microsoft Foundry Models: support now covers 28 models, including additional GPT, Claude, and Grok models, and quota limits increased across Tier 1 through Tier 6 for GlobalStandard and DataZoneStandard deployment types.</p>
+          <p class="summary">The platform implication is that model selection is becoming a routing and governance concern, not just an application coding decision. For enterprise AI work, this is where latency, quality, cost, allowed-model subsets, regional/data-zone requirements, and fallback behavior need a shared design.</p>
+          <div class="source-links">
+            <a href="https://learn.microsoft.com/azure/foundry/foundry-models/whats-new-model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Model router updates</a>
+            <a href="https://learn.microsoft.com/azure/foundry/openai/concepts/model-router" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Model router concepts</a>
+          </div>
+        </article>
+
+        <article class="update">
+          <div class="meta">May 27, 2026 · Hugging Face · AI agents</div>
+          <h3>ITBench-AA: Frontier Models Score Below 50% on the First Benchmark for Agentic Enterprise IT Tasks</h3>
+          <p class="summary">Hugging Face highlighted ITBench-AA from Artificial Analysis and IBM, a benchmark focused on agentic enterprise IT tasks. The headline result is that frontier models score below 50%, which is a useful reminder that IT automation agents still need constrained tools, checks, and evaluation rather than broad autonomy.</p>
+          <p class="summary">For infrastructure and operations teams, the relevant takeaway is not the benchmark race. It is that real IT tasks involve state, permissions, change sequencing, and failure recovery, so agent platforms need role-scoped identity, dry-run paths, audit logs, and human approval for risky actions.</p>
+          <div class="source-links">
+            <a href="https://huggingface.co/blog/ibm-research/itbench-aa" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Hugging Face post</a>
+          </div>
+        </article>
+
+        <article class="update">
+          <div class="meta">May 26, 2026 · vLLM · Inference runtime</div>
+          <h3>EAGLE 3.1: Advancing Speculative Decoding Through Collaboration Between the EAGLE Team, vLLM, and TorchSpec</h3>
+          <p class="summary">The vLLM project published a technical post on EAGLE 3.1 and speculative decoding. The update is relevant because inference performance work is moving quickly at the runtime layer, not only in model releases.</p>
+          <p class="summary">For AI infrastructure planning, speculative decoding affects throughput, latency, GPU efficiency, and serving economics. It is worth tracking when comparing managed endpoints, self-hosted inference, and specialized runtime stacks for high-volume internal AI services.</p>
+          <div class="source-links">
+            <a href="https://blog.vllm.ai/blog/2026-05-26-eagle-3-1" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">vLLM post</a>
+          </div>
+        </article>
+
+        <article class="update">
+          <div class="meta">May 26, 2026 · GitHub · AI governance</div>
+          <h3>Target Copilot models to organizations with model rules</h3>
+          <p class="summary">GitHub added public preview controls that let enterprise owners target which Copilot models are available to specific organizations. The update also refreshes default model availability management for enterprise admins.</p>
+          <p class="summary">This is a governance feature for AI-assisted development. Organizations can separate model availability by policy boundary instead of treating all repos and teams the same, which matters for regulated workloads, data exposure concerns, and phased adoption of new model families.</p>
+          <div class="source-links">
+            <a href="https://github.blog/changelog/2026-05-26-target-copilot-models-to-organizations-with-model-rules" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">GitHub changelog</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="security-identity">
+      <div class="section-row">
+        <h2>Security and identity</h2>
+        <p class="section-note">Identity, access, posture, and infrastructure risk</p>
+      </div>
+      <div class="compact-list">
+        <article class="compact-item">
+          <div class="meta">May 26, 2026 · Microsoft Entra Blog · Identity governance</div>
+          <h3>Find shadow tenants and reduce risk fast with Microsoft Entra Tenant Governance</h3>
+          <p class="summary">Microsoft Entra Tenant Governance adds continuous visibility into related tenants and the signals behind them. For large organizations, this helps find unmanaged or loosely governed tenants before they become audit, access, or incident-response blind spots.</p>
+          <div class="source-links">
+            <a href="https://techcommunity.microsoft.com/blog/microsoft-entra-blog/find-shadow-tenants-and-reduce-risk-fast-with-microsoft-entra-tenant-governance/4521996" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Entra Blog</a>
+          </div>
+        </article>
+
+        <article class="compact-item">
+          <div class="meta">May 26, 2026 · Microsoft Security Blog · Threat research</div>
+          <h3>From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities</h3>
+          <p class="summary">Microsoft reported a cryptojacking campaign that uses poisoned search results, ScreenConnect, and Microsoft .NET utilities to target high-performance PCs, with malicious sites also surfacing through AI chatbots. The infrastructure relevance is direct: remote access tools, GPU-capable hosts, and endpoint hygiene remain common paths into compute abuse.</p>
+          <div class="source-links">
+            <a href="https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Security Blog</a>
+          </div>
+        </article>
+
+        <article class="compact-item">
+          <div class="meta">May 2026 · Microsoft Learn · Defender</div>
+          <h3>What's new in Microsoft Defender XDR</h3>
+          <p class="summary">Microsoft Learn notes May updates for Defender XDR, including standalone Microsoft Defender Experts for Servers and Defender Experts for Hunting - Servers offerings for on-premises and multicloud servers protected by Defender for Cloud. This is relevant for hybrid server estates where security operations need managed investigation capacity without treating Azure-only workloads as the whole estate.</p>
+          <div class="source-links">
+            <a href="https://learn.microsoft.com/microsoft-365/security/defender/whats-new" target="_blank" rel="noopener noreferrer" onclick="event.preventDefault(); window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">Microsoft Learn</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="follow-up">
+      <div class="section-row">
+        <h2>Follow-up</h2>
+        <p class="section-note">Concrete read, build, and check actions</p>
+      </div>
+      <div class="follow-up">
+        <article>
+          <strong>Check AKS ingress and mesh patterns.</strong>
+          <p>Compare Application Gateway for Containers plus Istio mTLS against current AKS ingress standards, certificate handling, and network policy assumptions.</p>
+        </article>
+        <article>
+          <strong>Sketch an AVNM and Virtual WAN validation lab.</strong>
+          <p>Use a small hub-and-spoke design to test route intent, existing Virtual WAN routing, and governance boundaries before considering preview adoption.</p>
+        </article>
+        <article>
+          <strong>Review flow-log ingestion costs.</strong>
+          <p>Estimate Sentinel ingestion and retention for virtual network flow logs before enabling the connector across high-volume networks.</p>
+        </article>
+        <article>
+          <strong>Run an Entra tenant visibility check.</strong>
+          <p>Inventory known production, test, acquired, and unmanaged tenants; note which ones have owners, break-glass paths, and audit coverage.</p>
+        </article>
+        <article>
+          <strong>Build a model-router worksheet.</strong>
+          <p>Document allowed models, routing mode, fallback set, quota tier, data-zone needs, evaluation criteria, and cost controls for one Foundry workload.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
